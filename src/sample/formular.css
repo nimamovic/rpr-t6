@@ -1,0 +1,6 @@
+.okej {
+    -fx-control-inner-background: green;
+}
+.nijeOkej {
+    -fx-control-inner-background: red;
+}
