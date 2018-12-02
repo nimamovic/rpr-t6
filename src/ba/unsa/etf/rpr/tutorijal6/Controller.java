@@ -1,4 +1,4 @@
-package sample;
+package ba.unsa.etf.rpr.tutorijal6;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -35,6 +35,7 @@ public class Controller {
     private boolean telefonValidno;
     public String uporediSaJmbg;
     public String datumZaIspis = "";
+    public String uporeditiDatum = "";
 
     public boolean formularValidan() {
         return (imeValidno && prezimeValidno && indeksValidan && jmbgValidno && datumValidno && emailValidno);
@@ -59,9 +60,20 @@ public class Controller {
     }
 
     private boolean ispravanJMBG(String n) {
+        /* ne radi ipak
         if (n.length() != 13) return false;
-        if((11-(((n.charAt(0)-'0')+(n.charAt(6)-'0'))*7+6*((n.charAt(1)-'0')+(n.charAt(7)-'0'))+5*((n.charAt(2)-'0')+(n.charAt(8)-'0'))+4*((n.charAt(4)-'0')+(n.charAt(9)-'0'))+3*((n.charAt(5)-'0')+(n.charAt(10)-'0'))+2*((n.charAt(6)-'0')+(n.charAt(11)-'0'))))%11==n.charAt(12)) return  true;
-        return false;
+        if(11-((((n.charAt(0)-'0')+(n.charAt(6)-'0'))*7+6*((n.charAt(1)-'0')+(n.charAt(7)-'0'))+5*((n.charAt(2)-'0')+(n.charAt(8)-'0'))+4*((n.charAt(3)-'0')+(n.charAt(9)-'0'))+3*((n.charAt(4)-'0')+(n.charAt(10)-'0'))+2*((n.charAt(5)-'0')+(n.charAt(11)-'0')))%11)==n.charAt(12)) return  true;
+        return false;*/
+        if (n.length() < 13 || n.length() > 13) return false;
+        uporeditiDatum = n.substring(0, 6);
+        int regija = (n.charAt(7) - '0') * 10 + (n.charAt(8) - '0');
+        if (regija < 0 || regija > 96) return false;
+        int jedinstveniBroj = (n.charAt(9) - '0') * 100 + (n.charAt(10) - '0') * 10 + (n.charAt(11) - '0');
+        if (!((jedinstveniBroj>  0 &&jedinstveniBroj <= 499)||(jedinstveniBroj>=500 &&jedinstveniBroj<=999))) return false;
+        int kontrolnaCifra = 11 - ((7 * ((n.charAt(0) - '0') + (n.charAt(6) - '0')) + 6 * ((n.charAt(1) - '0') + (n.charAt(7) - '0')) + 5 * ((n.charAt(2) - '0') + (n.charAt(8) - '0')) + 4 * ((n.charAt(3) - '0') + (n.charAt(9) - '0')) + 3 * ((n.charAt(4) - '0') + (n.charAt(10) - '0')) + 2 * ((n.charAt(5) - '0') + (n.charAt(11) - '0'))) % 11);
+        if (kontrolnaCifra > 9) kontrolnaCifra = 0;
+        if (kontrolnaCifra != (n.charAt(12) - '0')) return false;
+        return true;
     }
 
     private boolean ispravanEmail(String n) {
@@ -80,48 +92,6 @@ public class Controller {
         Matcher matcher = pattern.matcher(n);
         Matcher matcher1 = pattern1.matcher(n);
         return (matcher.matches()|| matcher1.matches());
-    }
-
-    public void potvrda(ActionEvent actionEvent){
-        String rod = mjesto.getEditor().getText();
-        String imeNovo = ime.getText();
-        String prezimeNovo = prezime.getText();
-        String datumNovo = datum.getText();
-        String jmbgNovi = jmbg.getText();
-        String izdvojiDatum = "";
-        if (ispravanDatum(datumNovo)) {
-            datumValidno = true;
-        } else {
-            datumValidno = false;
-            datum.getStyleClass().add("nijeOkej");
-        }
-        if(ispravanJMBG(jmbgNovi)) jmbgValidno=true;
-        String emailNovi = email.getText();
-        if (ispravanEmail(emailNovi)) {
-            emailValidno = true;
-
-        } else {
-            emailValidno = false;
-            email.getStyleClass().add("nijeOkej");
-        }
-        telefonValidno=ispravanTelefon(telefon.getText());
-        if(telefonValidno)telefon.getStyleClass().add("okej");
-        if (formularValidan()) {
-            System.out.println("Student: " + imeNovo + " " + prezimeNovo + " ( " + index.getText() + " )");
-            System.out.println("JMBG: " + jmbgNovi + ", datum rođenja: " + datumZaIspis +", mjesto rodđenja: "+ rod);
-            System.out.println("Ulica stanovanja: " + adresa.getText() + ",broj telefona: " + telefon.getText());
-            System.out.println("Email adresa: " + emailNovi);
-            System.out.println(status.getValue().toString() + " student, smjer: " + smjer.getValue().toString() + " godina: " + godina.getValue());
-            if (pripadnost.isSelected()) System.out.println("Postoji neka od boračke pripadnosti");
-            else System.out.println("Ne postoji nikakva boračka pripadnost");
-        }
-        if (!formularValidan()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Nije validno!");
-            alert.setHeaderText("Popunjeni podaci nisu validni!");
-            alert.setContentText("Polja označena sa crvenom bojom nisu validna, molimo Vas da ispravino popunite formular!");
-            alert.show();
-        }
     }
 
     @FXML
@@ -226,4 +196,46 @@ public class Controller {
 
     }
 
+
+    public void potvrda(javafx.event.ActionEvent actionEvent) {
+        String rod = mjesto.getEditor().getText();
+        String imeNovo = ime.getText();
+        String prezimeNovo = prezime.getText();
+        String datumNovo = datum.getText();
+        String jmbgNovi = jmbg.getText();
+        String izdvojiDatum = "";
+        if (ispravanDatum(datumNovo)) {
+            datumValidno = true;
+        } else {
+            datumValidno = false;
+            datum.getStyleClass().add("nijeOkej");
+        }
+        if(ispravanJMBG(jmbgNovi)) jmbgValidno=true;
+        String emailNovi = email.getText();
+        if (ispravanEmail(emailNovi)) {
+            emailValidno = true;
+
+        } else {
+            emailValidno = false;
+            email.getStyleClass().add("nijeOkej");
+        }
+        telefonValidno=ispravanTelefon(telefon.getText());
+        if(telefonValidno)telefon.getStyleClass().add("okej");
+        if (formularValidan()) {
+            System.out.println("Student: " + imeNovo + " " + prezimeNovo + " ( " + index.getText() + " )");
+            System.out.println("JMBG: " + jmbgNovi + ", datum rođenja: " + datumZaIspis +", mjesto rodđenja: "+ rod);
+            System.out.println("Ulica stanovanja: " + adresa.getText() + ",broj telefona: " + telefon.getText());
+            System.out.println("Email adresa: " + emailNovi);
+            System.out.println(status.getValue().toString() + " student, smjer: " + smjer.getValue().toString() + " godina: " + godina.getValue());
+            if (pripadnost.isSelected()) System.out.println("Postoji neka od boračke pripadnosti");
+            else System.out.println("Ne postoji nikakva boračka pripadnost");
+        }
+        if (!formularValidan()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Nije validno!");
+            alert.setHeaderText("Popunjeni podaci nisu validni!");
+            alert.setContentText("Polja označena sa crvenom bojom nisu validna, molimo Vas da ispravino popunite formular!");
+            alert.show();
+        }
+    }
 }

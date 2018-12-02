@@ -14,9 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<?import javafx.collections.FXCollections?>
-<GridPane alignment="center" hgap="10" prefHeight="350.0" prefWidth="443.0" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="sample.Controller">
+<GridPane alignment="center" hgap="10" prefHeight="350.0" prefWidth="443.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.tutorijal6.Controller">
     <stylesheets>
         <URL value="@formular.css" />
     </stylesheets>
@@ -59,7 +57,7 @@
       <Label prefHeight="17.0" prefWidth="101.0" text="     MJESTO" GridPane.columnIndex="2" GridPane.rowIndex="2" />
       <TextField fx:id="jmbg" GridPane.columnIndex="3" />
       <TextField fx:id="datum" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      <ComboBox fx:id="mjesto" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" >
+      <ComboBox fx:id="mjesto" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
        <items>
            <FXCollections fx:factory="observableArrayList">
                <String fx:value="Sarajevo" />
@@ -71,7 +69,7 @@
            </FXCollections>
        </items>
       </ComboBox>
-      <ComboBox fx:id="godina" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" >
+      <ComboBox fx:id="godina" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
           <items>
               <FXCollections fx:factory="observableArrayList">
                   <String fx:value="prva" />
@@ -80,7 +78,7 @@
               </FXCollections>
           </items>
       </ComboBox>
-      <ComboBox fx:id="smjer" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="5" >
+      <ComboBox fx:id="smjer" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
           <items>
               <FXCollections fx:factory="observableArrayList">
                   <String fx:value="RI" />
@@ -96,7 +94,7 @@
       <Label prefHeight="17.0" prefWidth="98.0" text="     GODINA" GridPane.columnIndex="2" GridPane.rowIndex="4" />
       <Label prefHeight="17.0" prefWidth="96.0" text="      SMJER" GridPane.columnIndex="2" GridPane.rowIndex="5" />
       <Label prefHeight="17.0" prefWidth="93.0" text="     STATUS" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-      <ComboBox fx:id="status" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="6" >
+      <ComboBox fx:id="status" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
           <items>
               <FXCollections fx:factory="observableArrayList">
                   <String fx:value="redovan" />
@@ -105,6 +103,6 @@
           </items>
       </ComboBox>
       <CheckBox fx:id="pripadnost" mnemonicParsing="false" prefHeight="18.0" prefWidth="202.0" text="BORACKA PRIPADNOST" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="7" />
-      <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="203.0" text="POTVRDI" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+      <Button mnemonicParsing="false" onAction="#potvrda" prefHeight="27.0" prefWidth="203.0" text="POTVRDI" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
    </children>
 </GridPane>
